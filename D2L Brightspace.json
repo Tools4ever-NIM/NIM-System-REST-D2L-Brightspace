@@ -92,12 +92,6 @@
     },
     "connection": {
         "items": [
-            {
-                "name": "page_size",
-                "type": "textbox",
-                "label": "Page Size",
-                "value": "200"
-            }
         ]
     }
 }
