@@ -1,0 +1,103 @@
+{
+    "schema": {
+        "options": {},
+        "crud_objects": {
+            "Users": {
+                "operations": {
+                    "UsersList": {
+                        "method": "get",
+                        "call": {
+                            "path": "/d2l/api/lp/1.44/users/"
+                        },
+                        "processing_options": {
+                            "output_field": "Items"
+                        },
+                        "query_parameters": {}
+                    }
+                },
+                "parameters": {},
+                "key": "id",
+                "resources": {
+                    "OrgId": "number*",
+                    "UserId": "number*",
+                    "FirstName": "string*",
+                    "MiddleName": "string*",
+                    "LastName": "string*",
+                    "UserName": "string*",
+                    "ExternalEmail":"string*",
+                    "OrgDefinedId": "string*",
+                    "UniqueIdentifier": "string*",
+                    "Activation": {
+                        "IsActive": "_:string*"
+                    },
+                    "LastAccessedDate": "datetime*",
+                    "Pronouns": "string*"
+                }
+            }
+        }
+    },
+    "rest": {
+        "config": {
+            "baseUrl": "https://{tenant_id}",
+            "get": {
+                "maxPageCount": 5,
+                "query_parameters": {
+                },
+                "pagination":{
+                    "mode":"url",
+                    "zero_based": true,
+                    "last_page": {
+                        "type": "field",
+                        "name": "bookmark"
+                    },
+                    "replace_in_url": true
+                }
+            },
+            "authentication": "authorization_code_grant",
+            "call_handling": "generic",
+            "test_connection": {
+                "url": "/d2l/api/lp/1.9/users/whoami"
+            },
+            "socket_timeout": 3600000,
+            "retry": [
+                {
+                    "type": "statusCode",
+                    "statusCode": 429,
+                    "retry": {
+                        "type": "simple",
+                        "maxCount": 12,
+                        "waitTime": 5
+                    }
+                },
+                {
+                    "type": "statusCode",
+                    "statusCode": 500,
+                    "retry": {
+                        "type": "simple",
+                        "maxCount": 12,
+                        "waitTime": 5
+                    }
+                },
+                {
+                    "type": "connectionError"
+                }
+            ]
+        },
+        "authOptions": {
+            "type": "authorization_code_grant", 
+            "authUrl": "https://auth.brightspace.com/core/connect/token",
+            "loginUrl": "https://auth.brightspace.com/oauth2/auth?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scopes}",
+            "scopes": ["core:*:*", "users:*:*", "sessions:*:*", "attributes:*:* role:*:*"]
+        }
+    },
+    "connection": {
+        "items": [
+            {
+                "name": "page_size",
+                "type": "textbox",
+                "label": "Page Size",
+                "value": "200"
+            }
+        ]
+    }
+}
