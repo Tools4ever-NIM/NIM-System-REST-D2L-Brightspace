@@ -2,12 +2,34 @@
     "schema": {
         "options": {},
         "crud_objects": {
-            "Users": {
+            "AttributeSchema": {
                 "operations": {
-                    "UsersList": {
+                    "AttributeSchemaList": {
                         "method": "get",
                         "call": {
-                            "path": "/d2l/api/lp/1.44/users/"
+                            "path": "/d2l/api/lp/1.44/attributes/schemas%2F"
+                        },
+                        "processing_options": {
+                            "output_field": "UserAttributeDefinitions"
+                        },
+                        "query_parameters": {}
+                    }
+                },
+                "parameters": {},
+                "key": "AttributeId",
+                "resources": {
+                    "AttributeId": "string*",
+                    "Name": "string*",
+                    "Type": "string*",
+                    "AllowMulti": "boolean*"
+                }
+            },
+            "OrgStructures": {
+                "operations": {
+                    "OrgStructuresList": {
+                        "method": "get",
+                        "call": {
+                            "path": "/d2l/api/lp/1.44/orgstructure%2F"
                         },
                         "processing_options": {
                             "output_field": "Items"
@@ -16,7 +38,64 @@
                     }
                 },
                 "parameters": {},
-                "key": "id",
+                "key": "Identifier",
+                "resources": {
+                    "Identifier": "string*",
+                    "Name": "string*",
+                    "Code": "string*",
+                    "Path": "string*",
+                    "Type": { 
+                                "Id": "_:number*",
+                                "Code": "_:string*",
+                                "Name": "_:string*" 
+                            }
+                }
+            },
+            "Roles": {
+                "operations": {
+                    "RolesList": {
+                        "method": "get",
+                        "call": {
+                            "path": "/d2l/api/lp/1.44/roles%2F"
+                        },
+                        "processing_options": {
+                            "output_field": null
+                        },
+                        "query_parameters": {}
+                    }
+                },
+                "parameters": {},
+                "key": "Identifier",
+                "resources": {
+                    "Identifier": "string*",
+                    "DisplayName": "string*",
+                    "Code": "string*",
+                    "Description": "string*", 
+                    "RoleAlias": "string*",  
+                    "IsCascading": "boolean*",
+                    "AccessFutureCourses": "boolean*",
+                    "AccessInactiveCourses": "boolean*",
+                    "AccessPastCourses": "boolean*",
+                    "ShowInGrades": "boolean*",
+                    "ShowInUserProgress": "boolean*",
+                    "InClassList": "boolean*"
+                }
+            },
+            "Users": {
+                "operations": {
+                    "UsersList": {
+                        "method": "get",
+                        "call": {
+                            "path": "/d2l/api/lp/1.44/users%2F"
+                        },
+                        "processing_options": {
+                            "output_field": "Items"
+                        },
+                        "query_parameters": {}
+                    }
+                },
+                "parameters": {},
+                "key": "UserId",
                 "resources": {
                     "OrgId": "number*",
                     "UserId": "number*",
@@ -33,6 +112,131 @@
                     "LastAccessedDate": "datetime*",
                     "Pronouns": "string*"
                 }
+            },
+            "UserAttributes": {
+                "operations": {
+                    "UserAttributesList": {
+                        "method": "get",
+                        "call": {
+                           
+                            "mode": "iteration",
+                            "table": "Users",
+                            "path": "/d2l/api/lp/1.44/attributes/users/{iterator}",
+                            "iterator": "UserId",
+                            "base": {
+                                "UserId": "{iterator}"
+                            }
+                            
+                        },
+                        "processing_options": {
+                            "output_field": "Attributes"
+                        },
+                        "query_parameters": {},
+                        "maxSessionCount": 20
+                    },
+                    "UserAttributesUpdate": {
+                        "method": "put",
+                        "call": {
+                            "mode": "normal",
+                            "path": "/d2l/api/lp/1.44/attributes/users/{UserId}"
+                        },
+                        "body":{
+                            "_nim_merge_attributes_": false,
+                            "UserId": "{UserId}",
+                            "Attributes": [
+                                {
+                                    "AttributeId": "{AttributeId}",
+                                    "Value": ["{Value}"]
+                                }
+                            ]
+                        },
+                        "semantics": "update",
+                        "resource_allowance_default": "optional"
+                    },
+                    "UserAttributesCreate": {
+                        "method": "put",
+                        "call": {
+                            "mode": "normal",
+                            "path": "/d2l/api/lp/1.44/attributes/users/{UserId}"
+                        },
+                        "body":{
+                            "_nim_merge_attributes_": false,
+                            "UserId": "{UserId}",
+                            "Attributes": [
+                                {
+                                    "AttributeId": "{AttributeId}",
+                                    "Value": ["{Value}"]
+                                }
+                            ]
+                        },
+                        "semantics": "create",
+                        "resource_allowance_default": "optional"
+                    }
+                },
+                "parameters": {},
+                "resources": {
+                    "UserId": "string*",
+                    "AttributeId": "string*",
+                    "Value": "string*"
+                }
+            },
+            "UserProfiles": {
+                "operations": {
+                    "UserProfilesList": {
+                        "method": "get",
+                        "call": {
+                            "mode": "iteration",
+                            "table": "Users",
+                            "path": "/d2l/api/lp/1.44/profile/user/{iterator}",
+                            "iterator": "UserId",
+                            "base": {
+                                "Identifier": "{iterator}"
+                            }
+                        },
+                        "processing_options": {
+                            "output_field": null
+                        },
+                        "query_parameters": {},
+                        "maxSessionCount": 20
+                    }
+                },
+                "parameters": {},
+                "key": "Identifier",
+                "resources": {
+                    "Nickname": "string*",
+                    "Birthday": {
+                        "_:Month": "number*",
+                        "_:Day": "number*"
+                    },
+                    "HomeTown": "string*",
+                    "Email": "string*",
+                    "HomePage": "string*",
+                    "HomePhone": "string*",
+                    "BusinessPhone": "string*",
+                    "MobilePhone": "string*",
+                    "FaxNumber": "string*",
+                    "Address1": "string*",
+                    "Address2": "string*",
+                    "City": "string*",
+                    "Province": "string*",
+                    "PostalCode": "string*",
+                    "Country": "string*",
+                    "Company": "string*",
+                    "JobTitle": "string*",
+                    "HighSchool": "string*",
+                    "University": "string*",
+                    "Hobbies": "string*",
+                    "FavMusic": "string*",
+                    "FavTVShows": "string*",
+                    "FavMovies": "string*",
+                    "FavBooks": "string*",
+                    "FavQuotations": "string*",
+                    "FavWebSites": "string*",
+                    "FutureGoals": "string*",
+                    "FavMemory": "string*",
+                    "SocialMediaUrls": ["string"],
+                    "ProfileIdentifier": "string*"
+                }
             }
         }
     },
@@ -40,17 +244,16 @@
         "config": {
             "baseUrl": "https://{tenant_id}",
             "get": {
-                "maxPageCount": 5,
                 "query_parameters": {
                 },
-                "pagination":{
-                    "mode":"url",
-                    "zero_based": true,
-                    "last_page": {
-                        "type": "field",
-                        "name": "bookmark"
-                    },
-                    "replace_in_url": true
+                "pagination": {
+                    "mode": "skip_take",
+                    "path":[],
+                    "page_size":"100",
+                    "params":{
+                        "limit":"{take_count}",
+                        "bookmark":"{skip_count}"
+                    }
                 }
             },
             "authentication": "authorization_code_grant",
@@ -92,6 +295,7 @@
     },
     "connection": {
         "items": [
+            
         ]
     }
 }
