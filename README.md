@@ -11,7 +11,7 @@ D2L Brightspace
 - Click "Register an App"
 - Configure App
     - Name: "Tools4ever NIM"
-    - Redirect URI: <Copy from NIM System configuration screen>
+    - Redirect URI: Copy from NIM System configuration screen
     - Scope: "attributes:*:* core:*:* role:*:* sessions:*:* users:*:*"
     - Access Token Lifetime (seconds): 72000
     - Prompt for user consent: Unchecked
