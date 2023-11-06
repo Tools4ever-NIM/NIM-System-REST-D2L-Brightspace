@@ -134,25 +134,6 @@
                         "query_parameters": {},
                         "maxSessionCount": 20
                     },
-                    "UserAttributesUpdate": {
-                        "method": "put",
-                        "call": {
-                            "mode": "normal",
-                            "path": "/d2l/api/lp/1.44/attributes/users/{UserId}"
-                        },
-                        "body":{
-                            "_nim_merge_attributes_": false,
-                            "UserId": "{UserId}",
-                            "Attributes": [
-                                {
-                                    "AttributeId": "{AttributeId}",
-                                    "Value": ["{Value}"]
-                                }
-                            ]
-                        },
-                        "semantics": "update",
-                        "resource_allowance_default": "optional"
-                    },
                     "UserAttributesCreate": {
                         "method": "put",
                         "call": {
@@ -170,7 +151,37 @@
                             ]
                         },
                         "semantics": "create",
-                        "resource_allowance_default": "optional"
+                        "resource_allowance_default": "prohibited",
+                        "resource_mandatory": [
+                            "UserId",
+                            "AttributeId",
+                            "Value"
+                        ]
+                    },
+                    "UserAttributesRemoveAll": {
+                        "method": "delete",
+                        "call": {
+                            "mode": "normal",
+                            "path": "/d2l/api/lp/1.44/attributes/users/{UserId}"
+                        },
+                        "semantics": "delete",
+                        "resource_allowance_default": "prohibited",
+                        "resource_mandatory": [
+                            "UserId"
+                        ]
+                    }
+                },
+                "key": "AttributeId",
+                "groupmembership": {
+                    "add_operation": "UserAttributesCreate",
+                    "remove_operation": "UserAttributesRemove",
+                    "member_table": "Users",
+                    "group_table": "UserAttributes",
+                    "member_attributes": {
+                        "UserId": "UserId"
+                    },
+                    "group_attributes": {
+                        "AttributeId": "AttributeId"
                     }
                 },
                 "parameters": {},
