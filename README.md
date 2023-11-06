@@ -1,6 +1,9 @@
 # NIM-System-REST-D2L-Brightspace
 D2L Brightspace
 
+![image](https://github.com/Tools4ever-NIM/NIM-System-REST-D2L-Brightspace/assets/24281600/8cfcd29f-52bd-4c3c-9fb3-7400e2714905)
+
+
 # Setup Authorization
 - Login to the Brightspace portal as admin
 - Go to Settings > Manage Extensibility
