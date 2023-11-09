@@ -92,6 +92,62 @@
                             "output_field": "Items"
                         },
                         "query_parameters": {}
+                    },
+                    "UserCreate": {
+                        "method": "post",
+                        "call": {
+                            "mode": "normal",
+                            "path": "/d2l/api/lp/1.44/users%2F"
+                        },
+                        "query_parameters": {},
+                        "body":{
+                            "_nim_merge_attributes_": true,
+                            "OrgDefinedId": null,
+                            "MiddleName": null,
+                            "ExternalEmail": null,
+                            "SendCreationEmail": false,
+                            "Pronouns": null
+                        },
+                        "semantics": "create",
+                        "resource_allowance_default": "optional",
+                        "resource_prohibited": [
+                            "OrgId",
+                            "UserId",
+                            "UniqueIdentifier",
+                            "Activation_IsActive",
+                            "LastAccessedDate",
+                            "Pronouns",
+                            "OrgDefinedId",
+                            "MiddleName",
+                            "ExternalEmail",
+                            "SendCreationEmail"
+                        ],
+                        "resource_mandatory": [
+                            "FirstName",
+                            "LastName",
+                            "UserName",
+                            "IsActive",
+                            "RoleId"
+                        ]
+                    },
+                    "UserUpdate": {
+                        "method": "put",
+                        "call": {
+                            "mode": "normal",
+                            "path": "/d2l/api/lp/1.44/users/{UserId}"
+                        },
+                        "query_parameters": {},
+                        "semantics": "update",
+                        "resource_allowance_default": "optional",
+                        "resource_prohibited": [
+                            "OrgId",
+                            "UserId",
+                            "UniqueIdentifier",
+                            "Activation_IsActive",
+                            "LastAccessedDate",
+                            "Pronouns",
+                            "SendCreationEmail"
+                        ]
                     }
                 },
                 "parameters": {},
@@ -110,7 +166,10 @@
                         "IsActive": "_:string*"
                     },
                     "LastAccessedDate": "datetime*",
-                    "Pronouns": "string*"
+                    "Pronouns": "string*",
+                    "SendCreationEmail": "boolean",
+                    "IsActive": "boolean",
+                    "RoleId": "number"
                 }
             },
             "UserAttributes": {
