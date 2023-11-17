@@ -137,16 +137,26 @@
                             "path": "/d2l/api/lp/1.44/users/{UserId}"
                         },
                         "query_parameters": {},
-                        "semantics": "update",
-                        "resource_allowance_default": "optional",
-                        "resource_prohibited": [
-                            "OrgId",
-                            "UserId",
-                            "UniqueIdentifier",
-                            "Activation_IsActive",
-                            "LastAccessedDate",
-                            "Pronouns",
-                            "SendCreationEmail"
+						"body": {
+							"_nim_merge_attributes_": false,
+							"OrgDefinedId": "{OrgDefinedId}",
+							"FirstName": "{FirstName}",
+							"MiddleName": "{MiddleName}",
+							"LastName": "{LastName}",
+							"ExternalEmail": "{ExternalEmail}",
+							"UserName": "{UserName}",
+							"Activation": { "IsActive": "{IsActive}" },
+							"Pronouns": null
+						},
+                        "resource_allowance_default": "prohibited",
+						"resource_mandatory": [
+                            "OrgDefinedId",
+                            "FirstName",
+                            "MiddleName",
+							"LastName",
+							"ExternalEmail",
+							"UserName",
+							"IsActive"
                         ]
                     }
                 },
@@ -159,7 +169,8 @@
                     "MiddleName": "string*",
                     "LastName": "string*",
                     "UserName": "string*",
-                    "ExternalEmail":"string*",
+                    "EmailAddress": "string*",
+					"ExternalEmail":"string*",
                     "OrgDefinedId": "string*",
                     "UniqueIdentifier": "string*",
                     "Activation": {
