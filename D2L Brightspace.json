@@ -148,23 +148,27 @@
 							"Activation": { "IsActive": "{IsActive}" },
 							"Pronouns": null
 						},
-                        "resource_allowance_default": "prohibited",
+                        "resource_allowance_default": "optional",
+						"resource_prohibited": [
+							"OrgId",
+							"EmailAddress",
+							"UniqueIdentifier",
+							"LastAccessedDate",
+							"Pronouns",
+							"SendCreationEmail",
+							"RoleId",
+							"Activation.IsActive"
+						],
 						"resource_mandatory": [
-                            "OrgDefinedId",
-                            "FirstName",
-                            "MiddleName",
-							"LastName",
-							"ExternalEmail",
-							"UserName",
-							"IsActive"
+                            "UserId"
                         ]
                     }
                 },
                 "parameters": {},
                 "key": "UserId",
                 "resources": {
-                    "OrgId": "number*",
-                    "UserId": "number*",
+                    "OrgId": "string*",
+                    "UserId": "string*",
                     "FirstName": "string*",
                     "MiddleName": "string*",
                     "LastName": "string*",
@@ -180,7 +184,7 @@
                     "Pronouns": "string*",
                     "SendCreationEmail": "boolean",
                     "IsActive": "boolean",
-                    "RoleId": "number"
+                    "RoleId": "string"
                 }
             },
             "UserAttributes": {
@@ -216,7 +220,7 @@
                             "Attributes": [
                                 {
                                     "AttributeId": "{AttributeId}",
-                                    "Value": ["{Value}"]
+                                    "Value": "{Value}"
                                 }
                             ]
                         },
@@ -326,15 +330,22 @@
             "baseUrl": "https://{tenant_id}",
             "get": {
                 "query_parameters": {
+					"limit": "100"
                 },
                 "pagination": {
-                    "mode": "skip_take",
-                    "path":[],
-                    "page_size":"100",
-                    "params":{
-                        "limit":"{take_count}",
-                        "bookmark":"{skip_count}"
-                    }
+                    "mode": "url",
+                    "replace_in_url": true,
+					"last_page": {
+                       "type": "token",
+                       "path": "PagingInfo.Bookmark"
+                    },
+					"query_params": [{
+                        "name": "bookmark",
+                        "value": {
+                            "type": "response_field",
+                            "value": "PagingInfo.Bookmark"
+                        }
+                    }]
                 }
             },
             "authentication": "authorization_code_grant",
