@@ -290,8 +290,8 @@
                 "resources": {
                     "Nickname": "string*",
                     "Birthday": {
-                        "_:Month": "number*",
-                        "_:Day": "number*"
+                        "Month": "_:number*",
+                        "Day": "_:number*"
                     },
                     "HomeTown": "string*",
                     "Email": "string*",
